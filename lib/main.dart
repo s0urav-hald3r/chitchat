@@ -1,3 +1,7 @@
+import 'package:chitchat/app_constants.dart';
+import 'package:chitchat/message_area.dart';
+import 'package:chitchat/message_box.dart';
+import 'package:chitchat/size_configs.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,21 +22,30 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AppScreen extends StatelessWidget {
+class AppScreen extends StatefulWidget {
   const AppScreen({Key? key}) : super(key: key);
 
   @override
+  State<AppScreen> createState() => _AppScreenState();
+}
+
+class _AppScreenState extends State<AppScreen> {
+  TextEditingController messageController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.green.shade400,
+        backgroundColor: AppConstants.greenColor,
         title: const Text('Client Id'),
       ),
-      body: Container(
-        child: Column(children: [
-          
-        ],),
+      body: Column(
+        children: [
+          const MessageArea(),
+          MessageBox(),
+        ],
       ),
     );
   }
