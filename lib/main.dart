@@ -79,24 +79,28 @@ class _AppScreenState extends State<AppScreen> {
       body: Column(
         children: [
           Expanded(
-              child: Obx(() => Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: List.generate(chatController.chatHistory.length,
-                        (index) {
-                      if (chatController.chatHistory[index].socketId ==
-                          _socket.id) {
-                        return SentMessage(
+              child: Obx(() => SingleChildScrollView(
+                    reverse: true,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: List.generate(chatController.chatHistory.length,
+                          (index) {
+                        if (chatController.chatHistory[index].socketId ==
+                            _socket.id) {
+                          return SentMessage(
+                              message:
+                                  chatController.chatHistory[index].message);
+                        }
+                        return ReceivedMessage(
                             message: chatController.chatHistory[index].message);
-                      }
-                      return ReceivedMessage(
-                          message: chatController.chatHistory[index].message);
-                    }),
+                      }),
+                    ),
                   ))),
           Container(
             width: SizeConfig.screenWidth,
             height: SizeConfig.screenHeight! * 0.065,
             margin: EdgeInsets.only(
-                left: 20, right: 20, bottom: SizeConfig.safeAreaBottom!),
+                left: 20, right: 20, bottom: SizeConfig.safeAreaBottom! + 10),
             decoration: BoxDecoration(
                 border: Border.all(color: AppConstants.greenColor),
                 borderRadius: BorderRadius.circular(50)),
