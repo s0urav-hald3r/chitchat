@@ -39,6 +39,7 @@ class _AppScreenState extends State<AppScreen> {
   TextEditingController messageController = TextEditingController();
   final ChatController chatController = Get.find<ChatController>();
   late IO.Socket _socket;
+  String headerTitle = 'Chit Chat';
 
   @override
   void initState() {
@@ -50,6 +51,10 @@ class _AppScreenState extends State<AppScreen> {
             .disableAutoConnect() // disable auto-connection
             .build());
     _socket.connect();
+    _socket.onConnect((data) {
+      headerTitle = _socket.id!;
+      setState(() {});
+    });
     addSocketListener();
   }
 
@@ -74,7 +79,7 @@ class _AppScreenState extends State<AppScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppConstants.greenColor,
-        title: const Text('Chit Chat'),
+        title: Text(headerTitle),
       ),
       body: Column(
         children: [
